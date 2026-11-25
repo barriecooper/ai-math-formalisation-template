@@ -1,0 +1,28 @@
+name: Lean verification
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install pinned Lean release
+        shell: bash
+        run: |
+          toolchain=$(<lean/lean-toolchain)
+          [[ $toolchain =~ ^leanprover/lean4:v([0-9]+\.[0-9]+\.[0-9]+)$ ]]
+          version=${BASH_REMATCH[1]}
+          mkdir "$RUNNER_TEMP/lean"
+          curl --fail --silent --show-error --location --max-time 180 \
+            "https://github.com/leanprover/lean4/releases/download/v$version/lean-$version-linux.tar.zst" |
+            tar --zstd -xf - --strip-components=1 -C "$RUNNER_TEMP/lean"
+          echo "$RUNNER_TEMP/lean/bin" >> "$GITHUB_PATH"
+      - name: Compile and audit
+        run: bash lean/check.sh
