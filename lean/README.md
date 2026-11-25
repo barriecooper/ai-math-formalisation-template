@@ -1,17 +1,22 @@
-# Lean example
+# Lean and Mathlib starter
 
-With [Elan](https://github.com/leanprover/elan) and Bash available, run from the repository root:
+Install [Lean via Elan](https://lean-lang.org/install/). If you use VS Code, install its Lean 4 extension and open this `lean/` directory as your project folder. The pinned [Lean release](lean-toolchain) supplies Lake, and [the manifest](lake-manifest.json) locks Mathlib and its dependencies. Git, Bash, and network access are needed for the initial setup.
+
+From the repository root:
 
 ```bash
 bash lean/check.sh
+bash lean/tests/check.sh
 ```
 
-Elan selects the release pinned in [lean-toolchain](lean-toolchain) when the script enters this directory. A matching standalone Lean release on `PATH` also works. The script checks the version, compiles the example in a temporary directory with warnings treated as errors, and runs the audit. [CI](../.github/workflows/lean.yml) downloads the same release and runs the same script. The example requires no Mathlib or Lake dependencies.
+Lake fetches the locked dependencies and compiles the starter's small dependency tree from source. For larger projects, where Mathlib's public cache is available, you can use `cd lean && lake exe cache get Mathlib.Data.Nat.Basic` with the relevant Mathlib module names to fetch precompiled artifacts. Prefer specific imports to importing all of Mathlib. The CI job verifies pull requests and pushes to `main`, cancelling obsolete runs for the same PR or branch.
+
+Put mathematical source in `Formalisation/`. Use names such as `Formalisation/MyTopic.lean` for module `Formalisation.MyTopic`, with ASCII letters, digits and underscores in each segment and no leading digit. Add an import to `Formalisation.lean` when the umbrella module should expose it. The checker discovers Lean sources throughout the project, skips the root `.lake/` dependency and build directory, and fails on files outside the supported module layout. It explicitly builds and audits newly added modules even when the umbrella module omits them. The checker regression tests create and remove an isolated Lake project with no Mathlib dependency.
 
 ## Trusted base and limitations
 
-The policy trusts the pinned Lean release, its kernel and bundled library, and the verification code and build environment. This example allows **zero axiom dependencies**. The build rejects unfinished-proof warnings. The audit uses Lean's `collectAxioms` on all declarations in the compiled example module and fails on every reported axiom, including `sorryAx` and assumptions reached through the types or values of transitive dependencies. An unused axiom in an imported module is outside this audit. If adding project modules, extend the audit coverage and record any human-approved changes to the trusted base.
+The policy trusts the pinned Lean kernel, bundled library, locked dependencies, and verification code and build environment. The [allowlist](verification/allowed-axioms.txt) contains one exact Lean axiom name per line. Its defaults are the standard foundational axioms `propext`, `Classical.choice`, and `Quot.sound`. User-defined axioms require explicit human approval before they can be added. Any change to the allowlist or trusted-base policy requires explicit human approval recorded on the Issue or PR. `sorryAx` is always forbidden, including if entered in the allowlist.
 
-The audit reports kernel dependencies. It cannot establish semantic fidelity, meaningful hypotheses, or the integrity of a modified checker or toolchain. Review the formal statement against the informal claim, and review changes to the audit and CI as part of the trusted base.
+The build treats warnings as errors. The audit checks Lean's reported axiom dependencies of every declaration in each project module, including dependencies from imported definitions and proofs. It can detect a `sorryAx` dependency even when a warning is suppressed. Unused assumptions in dependencies are outside the audit. Human review checks the formal statement and hypotheses against the informal intent and inspects changes to the verification code and dependencies.
 
-For a project using a different prover, remove this directory and the Lean workflow, and update the example references in the repository documentation.
+If you use another prover, replace this directory and the Lean workflow, and update the starter references in the repository documentation.

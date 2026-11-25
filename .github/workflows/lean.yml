@@ -2,7 +2,12 @@ name: Lean verification
 
 on:
   push:
+    branches: [main]
   pull_request:
+
+concurrency:
+  group: lean-verification-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: read
@@ -10,7 +15,7 @@ permissions:
 jobs:
   verify:
     runs-on: ubuntu-24.04
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
       - name: Install pinned Lean release
@@ -26,3 +31,5 @@ jobs:
           echo "$RUNNER_TEMP/lean/bin" >> "$GITHUB_PATH"
       - name: Compile and audit
         run: bash lean/check.sh
+      - name: Test the integrity checker
+        run: bash lean/tests/check.sh

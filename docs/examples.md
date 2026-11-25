@@ -4,10 +4,10 @@ Both examples are illustrative. The reported activity, results, and references a
 
 ## Successful formalisation
 
-An Issue asks for a proof of `0 + n = n` for every natural number, with no extra hypotheses and no axiom dependencies. It allows editing only the example module and sets a stopping rule of three distinct unsuccessful strategies without new insight.
+An Issue asks for a proof of `0 + n = n` for every natural number, with no extra hypotheses or unapproved axiom dependencies. It allows editing only the example module and sets a stopping rule of three distinct unsuccessful strategies without new insight.
 
 - **Outcome and provenance** — Complete. Base `<base SHA>`, Lean 4.19.0, session reference unavailable, PR `<PR link>`.
-- **Progress and evidence** — Library inspection found `Nat.zero_add`. The committed theorem applies it directly. `bash lean/check.sh` passed, including the empty-allowlist audit. A separate reviewer confirmed that the statement covers every natural number.
+- **Progress and evidence** — Library inspection found `Nat.zero_add`. The committed theorem applies it directly. `bash lean/check.sh` passed, including the axiom allowlist audit. A separate reviewer confirmed that the statement covers every natural number.
 - **Stopping and changes** — Stopped after meeting the criteria. No failed strategies or outstanding goals. Elapsed time and resource usage unknown. The PR changes the example module.
 
 ## Blocked investigation

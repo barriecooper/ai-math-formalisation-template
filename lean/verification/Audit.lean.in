@@ -1,0 +1,22 @@
+
+open Lean in
+run_cmd do
+  let env ← getEnv
+  let some policyPath ← IO.getEnv "FORMALISATION_AXIOMS"
+    | throwError "Missing axiom allowlist path"
+  let some modules ← IO.getEnv "FORMALISATION_MODULES"
+    | throwError "Missing module list"
+  let allowed := ((← IO.FS.readFile policyPath).splitOn "\n").map String.trim
+  if allowed.any (· == "sorryAx") then
+    throwError "sorryAx cannot be allowlisted"
+  for moduleName in modules.splitOn "\n" do
+    let some moduleIndex := env.getModuleIdx? moduleName.toName
+      | throwError "Missing project module {moduleName}"
+    let declarations := env.header.moduleData[moduleIndex]!.constNames
+    for declaration in declarations do
+      let axioms ← collectAxioms declaration
+      let forbidden := axioms.filter fun axiomName =>
+        axiomName == `sorryAx || !allowed.any (· == axiomName.toString)
+      unless forbidden.isEmpty do
+        logError m!"{declaration} depends on forbidden axioms: {forbidden.toList}"
+    logInfo m!"Audited {moduleName} ({declarations.size} declarations)"

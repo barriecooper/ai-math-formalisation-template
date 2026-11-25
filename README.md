@@ -11,7 +11,7 @@ Use this template to commission bounded formalisation tasks, verify results, and
 5. Have a separate reviewer assess the statement against the informal intent and inspect the verification evidence. Resolve findings and obtain human acceptance before merging. See the [review guide](docs/review.md).
 6. Post the [completion report](docs/completion-report.md) on the originating Issue, including when work stops without a PR. See the [fictional worked examples](docs/examples.md).
 
-For a first exercise, verify the [Lean example](lean/README.md), then discuss the misleading variant in the review guide. The Issue and PR workflow also works with other provers.
+For GitHub steps, see the [newcomer walkthrough](docs/walkthrough.md). For a first exercise, verify the [Lean example](lean/README.md), then discuss the misleading variant in the review guide. The Issue and PR workflow also works with other provers.
 
 ## Planning and review assistant prompt
 
