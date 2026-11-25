@@ -6,7 +6,7 @@ run_cmd do
     | throwError "Missing axiom allowlist path"
   let some modules ← IO.getEnv "FORMALISATION_MODULES"
     | throwError "Missing module list"
-  let allowed := ((← IO.FS.readFile policyPath).splitOn "\n").map String.trim
+  let allowed := ((← IO.FS.readFile policyPath).splitOn "\n").map fun line => line.trimAscii.toString
   if allowed.any (· == "sorryAx") then
     throwError "sorryAx cannot be allowlisted"
   for moduleName in modules.splitOn "\n" do

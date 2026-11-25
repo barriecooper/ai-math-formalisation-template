@@ -1,1 +1,3 @@
-import Formalisation.NaturalNumbers
+module
+
+public import Formalisation.NaturalNumbers

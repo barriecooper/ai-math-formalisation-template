@@ -9,7 +9,7 @@ bash lean/check.sh
 bash lean/tests/check.sh
 ```
 
-Lake fetches the locked dependencies and compiles the starter's small dependency tree from source. For larger projects, where Mathlib's public cache is available, you can use `cd lean && lake exe cache get Mathlib.Data.Nat.Basic` with the relevant Mathlib module names to fetch precompiled artifacts. Prefer specific imports to importing all of Mathlib. The CI job verifies pull requests and pushes to `main`, cancelling obsolete runs for the same PR or branch.
+Lake fetches the locked dependencies. To fetch precompiled artifacts for the starter, run `(cd lean && lake exe cache get Mathlib.Data.Nat.Basic)` before verification. If the cache is unavailable, the verifier builds any missing artifacts from source. CI attempts the same cache download and reports a warning if it fails. Prefer specific imports to importing all of Mathlib. The CI job verifies pull requests and pushes to `main`, cancelling obsolete runs for the same PR or branch.
 
 Put mathematical source in `Formalisation/`. Use names such as `Formalisation/MyTopic.lean` for module `Formalisation.MyTopic`, with ASCII letters, digits and underscores in each segment and no leading digit. Add an import to `Formalisation.lean` when the umbrella module should expose it. The checker discovers Lean sources throughout the project, skips the root `.lake/` dependency and build directory, and fails on files outside the supported module layout. It explicitly builds and audits newly added modules even when the umbrella module omits them. The checker regression tests create and remove an isolated Lake project with no Mathlib dependency.
 

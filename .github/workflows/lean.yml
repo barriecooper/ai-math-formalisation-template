@@ -29,6 +29,16 @@ jobs:
             "https://github.com/leanprover/lean4/releases/download/v$version/lean-$version-linux.tar.zst" |
             tar --zstd -xf - --strip-components=1 -C "$RUNNER_TEMP/lean"
           echo "$RUNNER_TEMP/lean/bin" >> "$GITHUB_PATH"
+      - name: Fetch precompiled Mathlib starter dependencies
+        working-directory: lean
+        shell: bash
+        run: |
+          if timeout 180 lake exe cache get Mathlib.Data.Nat.Basic; then
+            echo "Mathlib cache command completed."
+          else
+            status=$?
+            echo "::warning::Mathlib cache command failed (exit $status). Continuing with source compilation."
+          fi
       - name: Compile and audit
         run: bash lean/check.sh
       - name: Test the integrity checker

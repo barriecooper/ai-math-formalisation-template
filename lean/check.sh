@@ -13,6 +13,7 @@ fi
 scratch=$(mktemp -d)
 trap 'rm -rf -- "$scratch"' EXIT
 find . -path './.lake' -prune -o -name '*.lean' -print0 > "$scratch/sources"
+# The audit uses Lean's legacy import mode to load private project declarations.
 printf 'import Lean\n' > "$scratch/Audit.lean"
 targets=()
 modules=()

@@ -35,7 +35,7 @@ expect_failure() {
 
 # An unfinished proof in a module that the root does not import.
 printf 'theorem incomplete : True := by sorry\n' > "$scratch/Formalisation/Incomplete.lean"
-expect_failure "declaration uses 'sorry'"
+expect_failure 'declaration uses `sorry`'
 
 # Suppressing the warning still leaves a forbidden dependency in the compiled module.
 cat > "$scratch/Formalisation/Incomplete.lean" <<'LEAN'
@@ -61,3 +61,11 @@ expect_failure 'indirect depends on forbidden axioms: [unapproved]'
 printf 'unapproved\n' >> "$scratch/verification/allowed-axioms.txt"
 bash "$checker" "$scratch" > "$scratch/log" 2>&1 || { cat "$scratch/log"; exit 1; }
 grep -F 'Audited Formalisation.Indirect (1 declarations)' "$scratch/log"
+
+# A private declaration in a Lean module is audited even when it is never used.
+cat > "$scratch/Formalisation/Private.lean" <<'LEAN'
+module
+
+private axiom hiddenUnapproved : False
+LEAN
+expect_failure 'hiddenUnapproved depends on forbidden axioms:'
