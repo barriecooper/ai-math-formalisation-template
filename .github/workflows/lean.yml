@@ -1,0 +1,45 @@
+name: Lean verification
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+concurrency:
+  group: lean-verification-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+      - name: Install pinned Lean release
+        shell: bash
+        run: |
+          toolchain=$(<lean/lean-toolchain)
+          [[ $toolchain =~ ^leanprover/lean4:v([0-9]+\.[0-9]+\.[0-9]+)$ ]]
+          version=${BASH_REMATCH[1]}
+          mkdir "$RUNNER_TEMP/lean"
+          curl --fail --silent --show-error --location --max-time 180 \
+            "https://github.com/leanprover/lean4/releases/download/v$version/lean-$version-linux.tar.zst" |
+            tar --zstd -xf - --strip-components=1 -C "$RUNNER_TEMP/lean"
+          echo "$RUNNER_TEMP/lean/bin" >> "$GITHUB_PATH"
+      - name: Fetch precompiled Mathlib starter dependencies
+        working-directory: lean
+        shell: bash
+        run: |
+          if timeout 180 lake exe cache get Mathlib.Data.Nat.Basic; then
+            echo "Mathlib cache command completed."
+          else
+            status=$?
+            echo "::warning::Mathlib cache command failed (exit $status). Continuing with source compilation."
+          fi
+      - name: Compile and audit
+        run: bash lean/check.sh
+      - name: Test the integrity checker
+        run: bash lean/tests/check.sh
