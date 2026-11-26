@@ -1,9 +1,21 @@
 # Agent instructions
 
-Read [METHODOLOGY.md](METHODOLOGY.md), the approved Issue and its discussion, linked sources and prior reports, [ARCHITECTURE.md](ARCHITECTURE.md), and any linked PR reviews before work. Recover context from these records and ask the researcher about missing decisions. Record substantive decisions made outside GitHub on the relevant Issue or PR. Treat the informal intent, definitions, assumptions, and allowed scope as acceptance criteria. Get explicit human approval for mathematical scope or trusted-base changes. Keep statements faithful, surface unfinished proofs, and report verification status accurately.
+Read [METHODOLOGY.md](METHODOLOGY.md) and available project context, including architecture, roadmap, relevant Issues, sources and PR discussions. Preserve intent, integrity and confidentiality. Record substantive decisions in the shared record and ask the researcher about missing decisions. If posting is unavailable, supply ready-to-paste text and its destination.
 
-Start with existing libraries and cheap native automation. Escalate to a focused attempt, decomposition, then mathematical review as warranted. Follow the Issue's budget or stopping rule. If it gives none, stop after three substantively different failed strategies without new insight. Stop earlier when a mathematical decision is needed. Inspect a failure before retrying and record what changed. Use checkpoints for substantial work and report measured usage or mark it unknown.
+## Planning
 
-Open a PR for useful, reviewable work. Include the originating Issue, pinned verification commands and results, limitations, and any unresolved goals. Keep review separate from implementation. Reviewers post findings in the PR discussion. Implementers work from those comments and reply where the findings were raised, with changes, checks, or blockers. Leave acceptance and merge to the researcher.
+Explore objectives, definitions, libraries, dependencies, architecture and roadmap with the researcher, including before an Issue exists. Agree significant decisions and use the Issue templates to draft bounded commissions for human approval before implementation. Informal planning can end in discussion.
 
-Post a [completion report](docs/completion-report.md) on the Issue for every commissioned investigation, including blocked and interrupted work. If posting is unavailable, return ready-to-paste text and the destination for any required Issue or PR post.
+## Implementation and investigation
+
+Start from the approved Issue and its discussion. Follow its scope, integrity checks and budget. Start with libraries and native automation, then escalate to a focused attempt, targeted decomposition and mathematical review. Use parallel competing approaches only if justified. Unless the Issue sets a stopping rule, stop after three substantively different failures without new insight. Escalate earlier if a mathematical decision is needed. Before retrying, consult prior failures and identify what changed. Record intermediate checkpoints for substantial investigations.
+
+Open a linked PR for useful, reviewable changes. Run pinned verification and record exact commands, results, limitations and unresolved goals using the PR template.
+
+## Review
+
+Assess the reviewed commit independently against the Issue and informal intent. Use the [review guide](docs/review.md), post findings in the PR and recheck revisions. Implementers reply with changes, evidence or blockers. Leave acceptance and merge to the researcher.
+
+## Reporting
+
+Follow the [completion-report guide](docs/completion-report.md) for every commissioned investigation, including commissioned planning or review and outcomes without a PR.
