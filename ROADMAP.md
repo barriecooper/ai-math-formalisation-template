@@ -1,7 +1,7 @@
 # Roadmap
 
-Use this page for high-level milestones. Link each commissioned milestone to its tracking Issue and keep investigation status and history there.
+Replace these example milestones with the project's mathematical objectives. Link each commissioned milestone to its tracking Issue. Keep investigation status, decisions and outcomes on the Issues.
 
-- Pilot the workflow with a familiar result and a semantic review exercise.
-- Identify a first research objective and commission a bounded formalisation Issue.
-- Review reproducibility, resource use, and researcher feedback after the pilot.
+- Settle the core definitions and their correspondence with the informal setting.
+- Formalise the prerequisite lemmas for the first main result.
+- Formalise and independently review the first main result.

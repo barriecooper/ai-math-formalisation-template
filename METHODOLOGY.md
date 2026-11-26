@@ -1,9 +1,7 @@
 # Resource-conscious human–AI mathematical formalisation
 
-Status: initial proposal for review, 25 November 2026.
-
 ## Purpose
-Enable research mathematicians, including newcomers to Lean and agentic coding, to formalise their research with modest computational resources while retaining mathematical ownership, reproducibility and critical oversight. Lean and Codex are initial tools, not requirements of the methodology.
+Enable research mathematicians, including newcomers to Lean and agentic coding, to formalise their research with modest computational resources while retaining mathematical ownership, reproducibility and critical oversight. Choose a proof assistant and AI tools that fit the project.
 
 ## Principles
 - Humans own mathematical intent, definitions, assumptions, architecture and acceptance decisions. AI assists planning, implementation and review; it is not an authority.
@@ -16,10 +14,10 @@ Enable research mathematicians, including newcomers to Lean and agentic coding, 
 
 ## Workflow
 1. Researcher and planning assistant agree mathematical objectives, formalisation choices and dependencies.
-2. Commission a bounded GitHub Issue with mathematical intent, acceptance criteria, relevant source locations and prior investigations, permitted scope, integrity rules and stopping conditions.
-3. Implementation agent inspects existing libraries and relevant reports, attempts inexpensive methods first, and records meaningful progress. Escalate unresolved architectural decisions rather than silently changing them.
+2. The planning assistant drafts a bounded GitHub Issue for the researcher to approve before commissioning the work. Include mathematical intent, acceptance criteria, relevant source locations and prior investigations, permitted scope, integrity rules and stopping conditions.
+3. The implementation agent starts from the approved Issue URL, inspects existing libraries and relevant reports, attempts inexpensive methods first, and records meaningful progress. Escalate unresolved architectural decisions rather than silently changing them.
 4. Submit a PR only for useful, reviewable changes. Run pinned-toolchain verification and report exact commands, results and limitations. Partial certified progress is welcome if clearly separated from unresolved goals.
-5. Reviewer checks mathematical semantics, assumptions, proof integrity, maintainability, scope and evidence. Request revisions in PR comments; merge only after required checks and human acceptance.
+5. Reviewer checks mathematical semantics, assumptions, proof integrity, maintainability, scope and evidence. Commission revisions through PR review comments and have the implementer respond there with changes and evidence. Merge only after required checks and human acceptance.
 6. Record the outcome on the originating Issue even if no PR exists. Link PRs, successor Issues and dependencies. Keep outstanding objectives open or explicitly close with rationale.
 7. Periodically review the roadmap and architecture at meaningful milestones rather than rewriting documentation on every task.
 
@@ -36,8 +34,8 @@ If the agent cannot post to GitHub, it returns the report for the researcher to 
 
 ## Information architecture
 - Source code: authoritative formal definitions and checked results, relative to the stated trusted base.
-- Issues: research notebook, objectives, prompts, investigations, outcomes, dependencies and decisions.
-- PRs: proposed changes, implementation evidence and critical review.
+- Issues: authoritative record of commissions, clarifications, decisions, dependencies and outcomes, including investigations without a PR.
+- PRs: proposed changes, implementation evidence and independent review, including revision requests and responses.
 - README: purpose, orientation and reproducible build instructions.
 - AGENTS.md: concise operational rules for agents, including reporting and escalation.
 - ARCHITECTURE.md: current mathematical abstractions and significant design rationale.
@@ -49,9 +47,14 @@ Documentation describes current knowledge, not chronological activity. Avoid par
 ## Resource strategy
 Escalate from native automation and library search to a focused agent attempt, targeted decomposition, mathematical review and only then parallel competing strategies if justified. Agree a modest task budget or stopping rule (for example, three substantively different failed strategies without new insight); stop earlier if a mathematical decision is needed. Preserve reusable certified partial results. Track actual usage only when available. Do not assume free verification implies free AI reasoning.
 
-## Teaching and evaluation
-Teach formal literacy (reading statements, types, hypotheses, proof states and verification limits), the Issue–PR workflow, critical review and failure handling, then initiate a small real research project. Independent proof-writing expertise is not an initial prerequisite, but semantic understanding is essential. Start with a familiar theorem and an intentionally misleading formalisation to demonstrate why green CI is insufficient.
-Potential evaluation: verified progress, human interventions, resource use, failed approaches, semantic errors detected, reproducibility and reuse. Obtain appropriate consent and governance before collecting research data about participants.
+## Formal literacy
 
-## Evolution
-Keep enduring research principles separate from replaceable tools and adapters. Version this framework, pilot it with colleagues, review changes through Issues and PRs, and consider a citable release after evaluation. Avoid premature orchestration automation. New agents should be able to reconstruct project context from the repository and relevant Issues without access to prior chats.
+Practise reading formal statements, types, hypotheses and proof states. Start with a familiar theorem and compare a faithful formalisation with one that verifies under an impossible hypothesis. Discuss what each statement establishes and what verification leaves for the reviewer to assess. Practise recording failed investigations alongside successful results.
+
+## Continuity across agents and tools
+
+Use GitHub Issues and PR discussions as a persistent, shared communication protocol between researchers and agents. Record substantive clarifications and decisions made in meetings or private chats on the relevant Issue or PR, within the project's confidentiality rules. Record changes to the commission and mathematical decisions on the Issue. Keep code-specific review requests and responses on the PR and link them from the Issue when they affect the investigation.
+
+Give each new agent the Issue URL and any active PR URL. The agent reconstructs the task from repository instructions, the commission, linked sources and prior reports, and any PR reviews and replies. If a needed decision or source is missing, ask the researcher and record the answer in the shared record. If an agent cannot post, it supplies ready-to-paste text and identifies the Issue, PR or review thread where it belongs.
+
+GitHub Projects can optionally provide a management view of Issues. Keep essential context and decisions on the Issues themselves.

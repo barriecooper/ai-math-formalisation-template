@@ -2,6 +2,8 @@
 
 In each new repository, check that Issues are enabled, the three Issue templates appear in the chooser, and a new PR gets the default PR template. Enable Actions if using the Lean example and confirm that the Lean verification job appears on a PR. Set required checks and approval rules in the new repository if desired. Template copies carry repository files. Plan to recreate labels, Issues, PRs, branch protection, and other settings as needed. Export Issue and PR history separately when archiving a research project.
 
+GitHub Projects is optional. You can use it to group Issues or see work by milestone. Keep commissions, decisions and outcomes on the Issues so researchers and agents can recover them directly.
+
 Create the following labels in **Issues → Labels** if you use labels to filter outcomes. Apply one outcome and, for a blocked investigation, the applicable blocker. The Issue comment records the evidence.
 
 | Label | Meaning |
