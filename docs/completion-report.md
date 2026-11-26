@@ -1,6 +1,6 @@
 # Issue completion report
 
-Copy the form below into a comment on the originating Issue. Keep the Issue open for outstanding objectives or record the reason for closing it. If GitHub posting is unavailable, return the filled report to the researcher for manual posting. After an abrupt interruption, the researcher records the interruption and any recoverable evidence.
+Post the form on the originating Issue when the investigation stops or is handed over for review, before merge. An agent may report implementation complete and identify pending review. The researcher decides final acceptance. Link related PRs, successor Issues and dependencies. Keep outstanding objectives open or record the reason for closing them. After an abrupt interruption, the researcher records what stopped and what evidence can be recovered. Treat an absent report as an unknown outcome.
 
 ```markdown
 ### Completion report
