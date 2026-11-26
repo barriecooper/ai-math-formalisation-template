@@ -28,7 +28,7 @@ Report every commissioned investigation on its originating Issue, including no-P
 - Source code holds formal definitions and checked results relative to the trusted base. [ARCHITECTURE.md](ARCHITECTURE.md) records current design and rationale. [ROADMAP.md](ROADMAP.md) tracks milestones linked to Issues.
 - Issues are authoritative for investigations, decisions and outcomes. PRs hold proposed changes, verification evidence and review.
 
-Keep durable documentation current, review it at meaningful milestones, and keep investigation history in the shared record. Retain relevant prompts and failed approaches in the shared record. Export Issue and PR history separately when archiving.
+Keep durable documentation current, review it at meaningful milestones, and keep investigation history in the shared record. Avoid parallel proof ledgers, exhaustive theorem inventories and duplicated status tables. Retain relevant prompts and failed approaches in the shared record. Export Issue and PR history separately when archiving.
 
 ## Applying the methodology
 
